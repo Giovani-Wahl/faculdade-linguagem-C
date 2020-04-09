@@ -99,6 +99,10 @@ Node* search(Node* root, int searchRu)
 
 int main() {
 	setlocale(LC_ALL, "Portuguese"); 
+	int RU;
+	char nome[lenght];
+	char email[lenght];
+
 	char giovani[lenght];
 	char giovaniemail[lenght];
 	strcpy_s(giovani, "Giovani");
@@ -176,7 +180,12 @@ int main() {
 			treeFree(root);
 			exit(0);
 			break;
+
 		case 1:
+			root = insert(root,RuCreate(RU,nome,email))
+			break;
+
+		case 2:
 			system("cls");
 			root = init();
 			root = insert(root, RuCreate(2787739, giovani, giovaniemail));
@@ -197,7 +206,7 @@ int main() {
 			printf("\n ARVORE CRIADA COM SECESSO \n");
 			system("pause");
 			break;
-		case 2:
+		case 3:
 			system("cls");
 			int RU;
 			if (root == NULL)
@@ -216,7 +225,7 @@ int main() {
 			}
 			system("pause");
 			break;
-		case 3:
+		case 4:
 			system("cls");
 			if (root != NULL)
 			{
@@ -243,9 +252,10 @@ int menu()
 	int op = 0;
 	int c;
 	printf("\n DIGITE A OPÇÃO DESEJADA DO MENU \n");
-	printf("\n // * 1 GERAR ARVORE \n");
-	printf("\n // ** 2 LOCALIZAR RU \n");
-	printf("\n // *** 3 IMPRIMIR TODA A ARVORE \n");
+	printf("\n // * 1 CADASTRAR ESTUDANTE \n");
+	printf("\n // ** 2 GERAR ARVORE \n");
+	printf("\n // *** 3 LOCALIZAR RU \n");
+	printf("\n // **** 4 IMPRIMIR TODA A ARVORE \n");
 	printf("\n // 0 SAIR \n");
 	scanf_s("%d", &op);
 	while ((c = getchar()) != '\n' && c != EOF) {};
