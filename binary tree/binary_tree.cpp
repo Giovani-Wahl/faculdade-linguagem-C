@@ -99,7 +99,7 @@ Node* search(Node* root, int searchRu)
 
 int main() {
 	setlocale(LC_ALL, "Portuguese"); 
-	int RU;
+	int RU = NULL;
 	char nome[lenght];
 	char email[lenght];
 
