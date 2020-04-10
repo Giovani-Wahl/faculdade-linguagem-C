@@ -182,7 +182,7 @@ int main() {
 			break;
 
 		case 1:
-			root = insert(root,RuCreate(RU,nome,email))
+			root = insert(root, RuCreate(RU, nome, email));
 			break;
 
 		case 2:
