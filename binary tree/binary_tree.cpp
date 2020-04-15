@@ -5,9 +5,9 @@
 
 #define lenght 30 
 
-int menu(); 
+int menu();
 
-struct  student_register  
+struct  student_register
 {
 	int RU;
 	char name_student[lenght];
@@ -16,7 +16,7 @@ struct  student_register
 
 typedef struct student_register Student;
 
-struct node 
+struct node
 {
 	Student Ru;
 	node* right;
@@ -25,36 +25,36 @@ struct node
 
 typedef node Node;
 
-Node* init() 
+Node* init()
 {
 	return NULL;
 }
 
-Student RuCreate(int ru, char nome[], char email[]) 
+Student RuCreate(int ru, char nome[], char email[])
 {
 	Student student;
-	student.RU = ru; 
+	student.RU = ru;
 	strcpy_s(student.name_student, nome);
 	strcpy_s(student.email_student, email);
 	return student;
 }
 
-Node* insert(Node* root, Student newRu) 
+Node* insert(Node* root, Student newRu)
 {
 	if (root == NULL)
 	{
-		Node* new_node = NULL;  
-		new_node = (Node*)malloc(sizeof(Node)); 
-		new_node->Ru = newRu; 
-		new_node->right = NULL; 
-		new_node->left = NULL; 
+		Node* new_node = NULL;
+		new_node = (Node*)malloc(sizeof(Node));
+		new_node->Ru = newRu;
+		new_node->right = NULL;
+		new_node->left = NULL;
 		return new_node;
 	}
-	else 
+	else
 	{
-		if (newRu.RU > root->Ru.RU) 
+		if (newRu.RU > root->Ru.RU)
 			root->right = insert(root->right, newRu);
-		else if (newRu.RU < root->Ru.RU) 
+		else if (newRu.RU < root->Ru.RU)
 			root->left = insert(root->left, newRu);
 	}
 	return root;
@@ -62,10 +62,10 @@ Node* insert(Node* root, Student newRu)
 
 void printSorted(Node* root)
 {
-	if (root != NULL) 
+	if (root != NULL)
 	{
-		printSorted(root->left); 
-		printf("\n %d \n", root->Ru); 
+		printSorted(root->left);
+		printf("\n %d \n", root->Ru);
 		printSorted(root->right);
 	}
 }
@@ -98,11 +98,13 @@ Node* search(Node* root, int searchRu)
 }
 
 int main() {
-	setlocale(LC_ALL, "Portuguese"); 
+	setlocale(LC_ALL, "Portuguese");
 	Node* root;
 	root = (Node*)malloc(sizeof(Node));
 	root = init();
 	Node* tmp;
+	FILE* arquivo;
+	errno_t err = 0;
 
 	while (1)
 	{
@@ -127,23 +129,34 @@ int main() {
 			gets_s(nome);
 			printf("\n DIGITE O E-MAIL \n");
 			gets_s(email);
-			root = insert(root, RuCreate(RU, nome,email));
+			root = insert(root, RuCreate(RU, nome, email));
 			break;
 		case 2:
 			system("cls");
-			char giovani[lenght];
-			char giovaniemail[lenght];
-			strcpy_s(giovani, "Giovani");
-			strcpy_s(giovaniemail, "giovaniwahl@gmail.com");
-			root = insert(root, RuCreate(2787739, giovani, giovaniemail));
-			printf("\n ARVORE CRIADA COM SECESSO \n");
+			err = fopen_s(&arquivo, "registro.txt", "w");
+			if (arquivo == NULL)
+			{
+				printf_s("ERRO NA ABERTURA DO ARQUIVO");
+				system("pause");
+				exit(1);
+			}
+			system("cls");
+			printf("\n INFORME O RU DO ESTUDANTE: \n");
+			scanf_s("%d", &RU);
+			while ((c = getchar()) != '\n' && c != EOF) {};
+			printf("\n DIGITE NOME \n");
+			gets_s(nome);
+			printf("\n DIGITE O E-MAIL \n");
+			gets_s(email);
+			root = insert(root, RuCreate(RU, nome, email));
+			fwrite(root, sizeof(struct student_register), 1, arquivo);
+			fclose(arquivo);
 			system("pause");
 			break;
 		case 3:
 			system("cls");
 			if (root == NULL)
 				printf("\n ARVORE NÃO GERADA \n");
-
 			if (root != NULL)
 			{
 				printf("\n DIGITE A RU DESEJADA \n");
@@ -185,7 +198,7 @@ int menu()
 	int c;
 	printf("\n DIGITE A OPÇÃO DESEJADA DO MENU \n");
 	printf("\n // * 1 CADASTRAR ESTUDANTE \n");
-	printf("\n // ** 2 GERAR ARVORE \n");
+	printf("\n // ** 2 GRAVAR REGISTRO EM ARQUIVO \n");
 	printf("\n // *** 3 LOCALIZAR RU \n");
 	printf("\n // **** 4 IMPRIMIR TODA A ARVORE \n");
 	printf("\n // 0 SAIR \n");
